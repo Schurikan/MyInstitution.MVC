@@ -33,14 +33,33 @@ namespace MyInstitution.MVC.Controllers
                 return NotFound();
             }
 
-            var @group = await _context.Groups
-                .FirstOrDefaultAsync(m => m.Id == id);
-            if (@group == null)
+            var group = await _context.Groups.FirstOrDefaultAsync(m => m.Id == id);
+            if (group == null)
             {
                 return NotFound();
             }
 
-            return View(@group);
+            var clients = from c in _context.Clients
+                          where c.GroupId == id
+                          select c;
+
+            var employees = from e in _context.Employees
+                            where e.GroupId == id
+                            select e;
+
+            var groupLeader = await _context.Employees.FirstOrDefaultAsync(e => e.Id == group.GroupLeaderEmployeeId);
+                //employees.FirstOrDefaultAsync(e => e.Id == group.GroupLeaderEmployeeId);
+                //.Where(e => e.Id == group.GroupLeaderEmployeeId);
+
+            var groupMembers = new GroupMemberModel
+            {
+                Group = group,
+                Clients = await clients.ToListAsync(),
+                Employees = await employees.ToListAsync(),
+                GroupLeader = groupLeader
+            };
+
+            return View(groupMembers);
         }
 
         // GET: Groups/Create
@@ -54,7 +73,7 @@ namespace MyInstitution.MVC.Controllers
         // more details, see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Create([Bind("Id,Name,GroupLeaderEmployeeId,Image")] Group @group)
+        public async Task<IActionResult> Create([Bind("Id,Name,GroupLeaderEmployeeId,Image,GroupId")] Group @group)
         {
             if (ModelState.IsValid)
             {
@@ -86,7 +105,7 @@ namespace MyInstitution.MVC.Controllers
         // more details, see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Edit(int id, [Bind("Id,Name,GroupLeaderEmployeeId,Image")] Group @group)
+        public async Task<IActionResult> Edit(int id, [Bind("Id,Name,GroupLeaderEmployeeId,Image,GroupId")] Group @group)
         {
             if (id != @group.Id)
             {

@@ -18,6 +18,7 @@ namespace MyInstitution.MVC.Models
 
         public string Image { get; set; }
 
+        public int GroupId { get; set; }
         //public List<UserRole> UserRoles { get; set; }
 
         //public ICollection<Group> Groups { get; set; }
