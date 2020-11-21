@@ -1,4 +1,5 @@
-﻿@model IEnumerable<MyInstitution.MVC.Models.Client>
+﻿@using Microsoft.AspNetCore.Components
+@model IEnumerable<MyInstitution.MVC.Models.Client>
 
 @{
     ViewData["Title"] = "Index";
@@ -25,23 +26,62 @@
         </tr>
     </thead>
     <tbody>
-@foreach (var item in Model) {
-        <tr>
-            <td>
-                @Html.DisplayFor(modelItem => item.Forename)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.Surname)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.DateOfBirth)
-            </td>
-            <td>
-                <a asp-action="Edit" asp-route-id="@item.Id">Edit</a> |
-                <a asp-action="Details" asp-route-id="@item.Id">Details</a> |
-                <a asp-action="Delete" asp-route-id="@item.Id">Delete</a>
-            </td>
-        </tr>
-}
+        @foreach (var item in Model)
+        {
+            <tr>
+                <td>
+                    @Html.DisplayFor(modelItem => item.Forename)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.Surname)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.DateOfBirth)
+                </td>
+                <td>
+                    <a asp-action="Edit" asp-route-id="@item.Id">Edit</a> |
+                    <a asp-action="Details" asp-route-id="@item.Id">Details</a> |
+                    <a asp-action="Delete" asp-route-id="@item.Id">Delete</a>
+                </td>
+            </tr>
+        }
     </tbody>
 </table>
+
+<div class="card-columns">
+
+    @foreach (var client in Model)
+    {
+        <div class="card">
+            <div class="card-header">
+                @client.Id @client.Forename @client.Surname
+            </div>
+            <div class="card-img" style="background-image: url('@client.Image');"></div>
+            <div clsss="card-body">
+                <div class="card-title">
+                    
+                </div>
+            </div>
+            <div class="card-footer">
+                <small class="text-muted">
+                    <a asp-action="Edit" asp-route-id="@client.Id">Edit</a> |
+                    <a asp-action="Details" asp-route-id="@client.Id">Details</a> |
+                    <a asp-action="Delete" asp-route-id="@client.Id">Delete</a>
+                    <!--<button--> @*@onclick="(e => SelectProduct(product.Id))"*@
+                            <!--data-toggle="modal" data-target="#productModal" class="btn btn-primary">
+                        More Info
+                    </button>-->
+                </small>
+            </div>
+        </div>
+    }
+</div>
+
+@*@{ 
+    Client selectedClient;
+
+    void SelectClient(Client client)
+    {
+        UriHelper.NavigateTo("/clients/"+client.Id);
+    }
+}*@
