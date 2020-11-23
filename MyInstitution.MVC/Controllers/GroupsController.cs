@@ -97,7 +97,51 @@ namespace MyInstitution.MVC.Controllers
             {
                 return NotFound();
             }
-            return View(@group);
+
+            var employeesQuery = from e in _context.Employees
+                                 orderby e.Surname
+                                 select e;
+
+            //var employees = _context.Employees.Select(e => new SelectListItem
+            //{
+            //    Text = e.Forename + " " + e.Surname,
+            //    Value = e.Id
+            //};
+
+            var test = _context.Employees.Select(u => new SelectListItem
+            {
+                Text = u.Forename + " " + u.Surname,
+                Value = u.Id.ToString()
+            });
+
+            var departmentsQuery = from e in _context.Employees
+                                   orderby e.Surname // Sort by name.
+                                   select new
+                                   {
+                                        Id       = e.Id
+                                       ,Forename = e.Forename
+                                       ,Surname = e.Surname
+                                       ,GroupId = e.GroupId 
+                                       ,Image = e.Image
+                                       ,displayColumn = e.Forename + ' ' + e.Surname
+                                   };
+
+            var groupModel = new GroupModel
+            {
+                Group = group,
+                Employees = new SelectList(departmentsQuery.AsNoTracking(),
+                        "Id", "displayColumn")
+            //_context.Employees.ToArrayAsync();
+            };
+
+
+            //var users = _usersRepository.Users.Select(u => new SelectListItem
+            //{
+            //    Text = u.FirstName + " " + u.LastName,
+            //    Value = SqlFunctions.StringConvert((double?)u.UserID)
+            //}
+
+            return View(groupModel);
         }
 
         // POST: Groups/Edit/5
@@ -105,7 +149,7 @@ namespace MyInstitution.MVC.Controllers
         // more details, see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Edit(int id, [Bind("Id,Name,GroupLeaderEmployeeId,Image,GroupId")] Group @group)
+        public async Task<IActionResult> Edit(int id, [Bind("Id,Name,GroupLeaderEmployeeId,Image")] Group @group)
         {
             if (id != @group.Id)
             {

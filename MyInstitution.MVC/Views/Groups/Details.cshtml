@@ -23,6 +23,7 @@
             @Html.DisplayFor(model => model.Group.GroupLeaderEmployeeId)
             @Html.DisplayFor(model => model.GroupLeader.Forename)
             @Html.DisplayFor(model => model.GroupLeader.Surname)
+            <img src="@Html.DisplayFor(model =>model.GroupLeader.Image)" style="height:250px;" />
         </dd>
         <dt class="col-sm-2">
             @Html.DisplayNameFor(model => model.Group.Image)
