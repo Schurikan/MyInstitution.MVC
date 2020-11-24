@@ -26,6 +26,7 @@ namespace MyInstitution.MVC
         public void ConfigureServices(IServiceCollection services)
         {
             services.AddControllersWithViews();
+            services.AddRazorPages();
 
             services.AddDbContext<InstitutionContext>(options =>
                 options.UseSqlServer(Configuration.GetConnectionString("InstitutionContextConnection")));
@@ -38,6 +39,7 @@ namespace MyInstitution.MVC
             if (env.IsDevelopment())
             {
                 app.UseDeveloperExceptionPage();
+                app.UseDatabaseErrorPage();
             }
             else
             {
@@ -50,6 +52,7 @@ namespace MyInstitution.MVC
 
             app.UseRouting();
 
+            app.UseAuthentication();
             app.UseAuthorization();
 
             app.UseEndpoints(endpoints =>
@@ -57,6 +60,7 @@ namespace MyInstitution.MVC
                 endpoints.MapControllerRoute(
                     name: "default",
                     pattern: "{controller=Home}/{action=Index}/{id?}");
+                endpoints.MapRazorPages();
             });
         }
     }
