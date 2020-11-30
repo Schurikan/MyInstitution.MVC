@@ -1,6 +1,42 @@
-﻿@{
+﻿@model MyInstitution.MVC.Models.PrivacyModel
+
+@{
     ViewData["Title"] = "Privacy Policy";
 }
 <h1>@ViewData["Title"]</h1>
 
 <p>Use this page to detail your site's privacy policy.</p>
+
+Anstehende Termine
+
+Anstehende bzw. vergangende Veranstaltungen
+Veranstaltungen mit den Kinder im Wald oder mit Eltern / Elterabend bzw. Elter-Kindgespräch
+
+@*<div class="card-columns">
+    @if (Model.Events != null)
+    {
+        @foreach (var _event in Model.Events)
+        {
+            <div class="card">
+                <div class="card-header">
+                    @_event.Id @_event.Name
+                </div>
+                <div class="card-img" style="background-image: url('@_event.Image');"></div>
+                <div clsss="card-body">
+                    <div class="card-title">
+                        <h4>@_event.Summary</h4>
+                    </div>
+                    <div class="card-text">
+                        @_event.Text
+                    </div>
+
+                </div>
+                <div class="card-footer">
+                    <small class="text-muted">
+                        <button class="btn-primary">Mehr</button>
+                    </small>
+                </div>
+            </div>
+        }
+    }
+</div>*@

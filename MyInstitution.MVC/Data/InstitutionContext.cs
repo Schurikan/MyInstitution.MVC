@@ -29,5 +29,7 @@ namespace MyInstitution.MVC.Data
 
         public DbSet<Group> Groups { get; set; }
 
+        public DbSet<Event> Events { get; set; }
+
     }
 }
