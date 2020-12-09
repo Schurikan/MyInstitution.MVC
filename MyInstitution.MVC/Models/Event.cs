@@ -17,11 +17,12 @@ namespace MyInstitution.MVC.Models
 
         public string Text { get; set; }
 
-        
-        //[DisplayFormat(DataFormatString = "{dd.mm.yyyy mm:hh}", ApplyFormatInEditMode = true)]
+        [Display(Name = "Begin")]
+        [DisplayFormat(ApplyFormatInEditMode = true, DataFormatString = "{0:dd.MM.yyyy HH:mm}")]
         public DateTime DateBegin { get; set; }
 
-        //[DisplayFormat(DataFormatString = "{dd.mm.yyyy mm:hh}", ApplyFormatInEditMode = true)]
+        [Display(Name = "Ende")]
+        [DisplayFormat(ApplyFormatInEditMode = true, DataFormatString = "{0:dd.MM.yyyy HH:mm}")]
         public DateTime DateEnd{ get; set; }
 
         public int Duration { get; set;}

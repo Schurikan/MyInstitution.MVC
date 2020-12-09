@@ -31,5 +31,7 @@ namespace MyInstitution.MVC.Data
 
         public DbSet<Event> Events { get; set; }
 
+        public DbSet<EventMember> EventMembers { get; set; }
+
     }
 }

@@ -111,6 +111,24 @@ namespace MyInstitution.MVC.Migrations
                     b.ToTable("Events");
                 });
 
+            modelBuilder.Entity("MyInstitution.MVC.Models.EventMember", b =>
+                {
+                    b.Property<int>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("int")
+                        .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
+
+                    b.Property<int>("ApplicationUserId")
+                        .HasColumnType("int");
+
+                    b.Property<int>("EventId")
+                        .HasColumnType("int");
+
+                    b.HasKey("Id");
+
+                    b.ToTable("EventMembers");
+                });
+
             modelBuilder.Entity("MyInstitution.MVC.Models.Group", b =>
                 {
                     b.Property<int>("Id")

@@ -153,10 +153,21 @@ ul {
     background: linear-gradient(110deg, #252152 60%, #e9a8a6 60%);
 }
 
+body {
+    background: url('https://64.media.tumblr.com/d7d5ea8730533eeefffca37feb2c9def/tumblr_or6sm58PRF1upvbufo1_540.gifv') no-repeat center center fixed;
+    /*background: url('https://media3.giphy.com/media/3oEduYJ5WzNGsAadKU/source.gif') no-repeat center center fixed;*/
+    /*    -webkit-background-size: cover;
+    -moz-background-size: cover;*/
+    background-size: cover;
+    /*    -o-background-size: cover;*/
+}
+
 .masthead {
-    height: 100vh;
-    min-height: 500px;
-    background-image: url('https://previews.123rf.com/images/iimages/iimages1403/iimages140301506/27136170-illustration-of-the-four-playful-kids-at-the-forest.jpg');
+    height: 90vh;
+    min-height: 400px;
+    /*background-image: url('https://media.giphy.com/media/l4hLU0BjSbMbDdVoA/giphy.gif') no-repeat center center fixed;;*/
+    /*background-image: url('https://media.giphy.com/media/3ohhwrc9cS3agj4afC/giphy.gif');*/
+    /*background-image: url('https://previews.123rf.com/images/iimages/iimages1403/iimages140301506/27136170-illustration-of-the-four-playful-kids-at-the-forest.jpg');*/
     /*background-image: url('https://image.shutterstock.com/z/stock-vector-panoramic-of-countryside-landscape-in-autumn-vector-illustration-of-horizontal-banner-of-autumn-1143971711.jpg');*/
     background-size: cover;
     background-position: center;
@@ -174,6 +185,9 @@ ul {
     opacity: .8;
 }
 
+.home .card {
+    margin-bottom: 15px;
+}
 /*Privacy*/
 
 .event .card {
@@ -188,4 +202,13 @@ ul {
 .event .card .card-text {
     padding-left: 15px;
     padding-right: 15px;
+}
+
+    .home .card .card-text {
+        padding: 15px;
+    }
+
+.background80 {
+    background: rgba(245, 247, 250, .8);
+    border-radius: 15px;
 }
