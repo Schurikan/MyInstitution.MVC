@@ -33,5 +33,7 @@ namespace MyInstitution.MVC.Data
 
         public DbSet<EventMember> EventMembers { get; set; }
 
+        public DbSet<DutyRoster> DutyRosters { get; set; }
+
     }
 }

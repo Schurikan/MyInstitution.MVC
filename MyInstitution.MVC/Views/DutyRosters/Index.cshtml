@@ -1,0 +1,139 @@
+﻿@model MyInstitution.MVC.Models.DutyRosterModel
+
+@{
+    ViewData["Title"] = "Index";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<h1>Index</h1>
+
+<p>
+    <a asp-action="Create">Create New</a>
+</p>
+<table class="table">
+    <thead>
+        <tr>
+            <th>
+                @Html.DisplayNameFor(model => model.DutyRoster.Year)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.DutyRoster.Week)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.DutyRoster.Day)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.DutyRoster.GroupId)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.DutyRoster.EmployeeId)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.DutyRoster.StartTime)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.DutyRoster.EndTime)
+            </th>
+            <th></th>
+        </tr>
+    </thead>
+    <tbody>
+        @foreach (var item in Model.DutyRosters)
+        {
+            <tr>
+                <td>
+                    @Html.DisplayFor(modelItem => item.Year)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.Week)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.Day)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.GroupId)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.EmployeeId)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.StartTime)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.EndTime)
+                </td>
+                <td>
+                    <a asp-action="Edit" asp-route-id="@item.Id">Edit</a> |
+                    <a asp-action="Details" asp-route-id="@item.Id">Details</a> |
+                    <a asp-action="Delete" asp-route-id="@item.Id">Delete</a>
+                </td>
+            </tr>
+        }
+    </tbody>
+</table>
+
+<div class="row">
+
+    <div class="col-sm-3">
+        <h3>Mitarbeiter</h3>
+
+    </div>
+    <div class="col-sm-9">
+        <h3>Dienstplan</h3>
+        <div class="row">
+            Jahr: @Model.DutyRoster.Year KW: @Model.DutyRoster.Week
+
+            <form asp-controller="DutyRosters" asp-action="Index">
+                <p>
+                    Year: <input type="number" name="SearchYear">
+                    Week: <input type="number" name="SearchWeek">
+                    <input type="submit" value="Filter" />
+                </p>
+            </form>
+
+        </div>
+        <div class="row">
+            <div class="sm">
+                Gruppe / Woche
+            </div>
+            <div class="m-2">
+                Montag
+            </div>
+            <div class="m-2">
+                Dienstag
+            </div>
+            <div class="m-2">
+                Mittwoch
+            </div>
+            <div class="m-2">
+                Donnerstag
+            </div>
+            <div class="m-2">
+                Freitag
+            </div>
+            <div class="m-2">
+                Samstag
+            </div>
+            <div class="m-2">
+                Sonntag
+            </div>
+        </div>
+        <a class="nav-link text-white" asp-area="" asp-controller="Privacy" asp-action="Index">
+            <i class="material-icons" style="font-size:20px;color:black; display: inline-flex;vertical-align: middle;">angle-left</i>
+        </a>
+
+        <a class="nav-link text-white" asp-area="" asp-controller="Privacy" asp-action="Index">
+            <i class="material-icons" style="font-size:20px;color:white; display: inline-flex;vertical-align: middle;">angle-right</i>
+        </a>
+
+        @foreach (var group in Model.Groups)
+        {
+            <div class="row">
+                @group.Name
+            </div>
+        }
+
+    </div>
+
+</div>
+

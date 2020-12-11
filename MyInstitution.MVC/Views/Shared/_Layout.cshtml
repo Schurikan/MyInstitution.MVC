@@ -41,12 +41,12 @@
                             </li>
                         }
                         @*@if (User.Identity.IsAuthenticated)
-                            {
-                                if (User.IsInRole("Admin"))
-                                {
-                                    @Html.ActionLink("Admin", "AdminController")
-                                }
-                            }*@
+        {
+            if (User.IsInRole("Admin"))
+            {
+                @Html.ActionLink("Admin", "AdminController")
+            }
+        }*@
 
                         <li class="nav-item">
                             <a class="nav-link text-white" asp-area="" asp-controller="Clients" asp-action="Index">Clients</a>
@@ -56,6 +56,9 @@
                         </li>
                         <li class="nav-item">
                             <a class="nav-link text-white" asp-area="" asp-controller="Groups" asp-action="Index">Groups</a>
+                        </li>
+                        <li class="nav-item">
+                            <a class="nav-link text-white" asp-area="" asp-controller="DutyRosters" asp-action="Index">Dienstplan</a>
                         </li>
                     </ul>
                 </div>
