@@ -20,7 +20,7 @@ for details on configuring this project to bundle and minify static web assets. 
 }
 
 .card-columns .card-img {
-    height: 330px;
+    height: 250px;
     vertical-align: bottom;
     background-position: center; /* Center the image */
     background-repeat: no-repeat; /* Do not repeat the image */
@@ -29,7 +29,7 @@ for details on configuring this project to bundle and minify static web assets. 
 }
 
 .modal .card-img {
-    height: 500px;
+    height: 300px;
     vertical-align: bottom;
     background-position: center; /* Center the image */
     background-repeat: no-repeat; /* Do not repeat the image */
@@ -154,7 +154,7 @@ ul {
 }
 
 body {
-    background: url('https://64.media.tumblr.com/d7d5ea8730533eeefffca37feb2c9def/tumblr_or6sm58PRF1upvbufo1_540.gifv') no-repeat center center fixed;
+    /*background: url('https://64.media.tumblr.com/d7d5ea8730533eeefffca37feb2c9def/tumblr_or6sm58PRF1upvbufo1_540.gifv') no-repeat center center fixed;*/
     /*background: url('https://media3.giphy.com/media/3oEduYJ5WzNGsAadKU/source.gif') no-repeat center center fixed;*/
     /*    -webkit-background-size: cover;
     -moz-background-size: cover;*/
@@ -199,16 +199,82 @@ body {
         padding-right: 15px;
     }
 
-.event .card .card-text {
-    padding-left: 15px;
-    padding-right: 15px;
-}
-
-    .home .card .card-text {
-        padding: 15px;
+    .event .card .card-text {
+        padding-left: 15px;
+        padding-right: 15px;
     }
 
-.background80 {
-    background: rgba(245, 247, 250, .8);
-    border-radius: 15px;
+.home .card .card-text {
+    padding: 15px;
 }
+
+a > i {
+    font-size: 10px;
+    color: black;
+    display: inline-flex;
+    vertical-align: middle;
+}
+
+.card-deck .card:hover .card-img {
+    opacity: 1;
+    -webkit-transform-style: preserve-3d;
+}
+
+.card-deck .card-body {
+    height: 100px;
+    font-family: 'Nunito', sans-serif;
+    background: #fbfafd;
+}
+
+.card-deck .card-img {
+    height: 300px;
+    vertical-align: bottom;
+    background-position: center; /* Center the image */
+    background-repeat: no-repeat; /* Do not repeat the image */
+    background-size: cover; /* Resize the background image to cover the entire container */
+    opacity: .8;
+}
+
+/*.modal .card-img {
+    height: 300px;
+    vertical-align: bottom;
+    background-position: center;*/ /* Center the image */
+/*background-repeat: no-repeat;*/ /* Do not repeat the image */
+/*background-size: cover;*/ /* Resize the background image to cover the entire container */
+/*}*/
+
+.card-deck .card:hover {
+    transform: scale(1.05);
+    box-shadow: 0 10px 20px rgba(37,33,82,.12), 0 4px 8px rgba(37,33,82,.06);
+}
+
+.form-card {
+    margin: 20px;
+}
+
+    .form-card .card-img {
+        height: 350px;
+        background-position: center; /* Center the image */
+        background-repeat: no-repeat; /* Do not repeat the image */
+        background-size: cover; /* Resize the background image to cover the entire container */
+        opacity: .9;
+    }
+.card-list-col {
+    margin-bottom: 20px;
+}
+
+    .card-list-col .card .my-card-header {
+        height: 50px;
+    }
+
+    .card-list-col .card .card-img-top {
+        width: 100%;
+        height: 40vh;
+        object-fit: cover;
+        background-position: center; /* Center the image */
+        background-repeat: no-repeat; /* Do not repeat the image */
+        background-size: cover; /* Resize the background image to cover the entire container */
+        opacity: .9;
+        border-top-left-radius: calc(.0rem - 1px);
+        border-top-right-radius: calc(.0rem - 1px);
+    }

@@ -5,83 +5,79 @@
     ViewData["Title"] = "Index";
 }
 
-<h1>Index</h1>
+<div class="card">
+    <div class="card-header">
+        <h1>Index</h1>
+    </div>
+    <div class="form-card">
+        <p>
+            <a asp-action="Create">Create New</a>
+        </p>
+        <table class="table">
+            <thead>
+                <tr>
+                    <th>
+                        @Html.DisplayNameFor(model => model.Forename)
+                    </th>
+                    <th>
+                        @Html.DisplayNameFor(model => model.Surname)
+                    </th>
+                    <th>
+                        @Html.DisplayNameFor(model => model.DateOfBirth)
+                    </th>
+                    <th></th>
+                </tr>
+            </thead>
+            <tbody>
+                @foreach (var item in Model)
+                {
+                    <tr>
+                        <td>
+                            @Html.DisplayFor(modelItem => item.Forename)
+                        </td>
+                        <td>
+                            @Html.DisplayFor(modelItem => item.Surname)
+                        </td>
+                        <td>
+                            @Html.DisplayFor(modelItem => item.DateOfBirth)
+                        </td>
+                        <td>
+                            <a asp-action="Edit" asp-route-id="@item.Id">Edit</a> |
+                            <a asp-action="Details" asp-route-id="@item.Id">Details</a> |
+                            <a asp-action="Delete" asp-route-id="@item.Id">Delete</a>
+                        </td>
+                    </tr>
+                }
+            </tbody>
+        </table>
 
-<p>
-    <a asp-action="Create">Create New</a>
-</p>
-<table class="table">
-    <thead>
-        <tr>
-            <th>
-                @Html.DisplayNameFor(model => model.Forename)
-            </th>
-            <th>
-                @Html.DisplayNameFor(model => model.Surname)
-            </th>
-            <th>
-                @Html.DisplayNameFor(model => model.DateOfBirth)
-            </th>
-            <th></th>
-        </tr>
-    </thead>
-    <tbody>
-        @foreach (var item in Model)
-        {
-            <tr>
-                <td>
-                    @Html.DisplayFor(modelItem => item.Forename)
-                </td>
-                <td>
-                    @Html.DisplayFor(modelItem => item.Surname)
-                </td>
-                <td>
-                    @Html.DisplayFor(modelItem => item.DateOfBirth)
-                </td>
-                <td>
-                    <a asp-action="Edit" asp-route-id="@item.Id">Edit</a> |
-                    <a asp-action="Details" asp-route-id="@item.Id">Details</a> |
-                    <a asp-action="Delete" asp-route-id="@item.Id">Delete</a>
-                </td>
-            </tr>
-        }
-    </tbody>
-</table>
+        <div class="row">
+          
+            @foreach (var client in Model)
+            {
+                <div class="col-sm-6 col-lg-3 card-list-col">
 
-<div class="card-columns">
-
-    @foreach (var client in Model)
-    {
-        <div class="card">
-            <div class="card-header">
-                @client.Id @client.Forename @client.Surname
-            </div>
-            <div class="card-img" style="background-image: url('@client.Image');"></div>
-            <div clsss="card-body">
-                <div class="card-title">
-                    
+                    <div class="card h-100">
+                        <div class="card-header">
+                            @client.Id | @client.Forename @client.Surname
+                        </div>
+                        <div class="card-img-top" style="background-image: url('@client.Image');"></div>
+                        @*<img src="@client.Image" class="card-img" alt="#">*@
+                        @*<div class="card-img-top" style="background-image: url('@client.Image');"></div>*@
+                        <div class="card-body">
+                            <h5 class="card-title">Card title</h5>
+                            <p class="card-text">This is a longer card with supporting text below as a natural lead-in to additional content. This content is a little bit longer.</p>
+                        </div>
+                        <div class="card-footer">
+                            <small class="text-muted">
+                                <a asp-action="Edit" asp-route-id="@client.Id">Edit</a> |
+                                <a asp-action="Details" asp-route-id="@client.Id">Details</a> |
+                                <a asp-action="Delete" asp-route-id="@client.Id">Delete</a>
+                            </small>
+                        </div>
+                    </div>
                 </div>
-            </div>
-            <div class="card-footer">
-                <small class="text-muted">
-                    <a asp-action="Edit" asp-route-id="@client.Id">Edit</a> |
-                    <a asp-action="Details" asp-route-id="@client.Id">Details</a> |
-                    <a asp-action="Delete" asp-route-id="@client.Id">Delete</a>
-                    <!--<button--> @*@onclick="(e => SelectProduct(product.Id))"*@
-                            <!--data-toggle="modal" data-target="#productModal" class="btn btn-primary">
-                        More Info
-                    </button>-->
-                </small>
-            </div>
+            }
         </div>
-    }
+    </div>
 </div>
-
-@*@{ 
-    Client selectedClient;
-
-    void SelectClient(Client client)
-    {
-        UriHelper.NavigateTo("/clients/"+client.Id);
-    }
-}*@

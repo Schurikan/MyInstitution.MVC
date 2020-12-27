@@ -46,7 +46,17 @@ namespace MyInstitution.MVC.Controllers
         // GET: Employees/Create
         public IActionResult Create()
         {
-            return View();
+            var employeeModel = new EmployeeModel();
+
+            employeeModel.Employee = new Employee();
+            employeeModel.Groups = _context.Groups
+                      .Select(a => new SelectListItem()
+                      {
+                          Value = a.Id.ToString(),
+                          Text = a.Name
+                      })
+                      .ToList();
+            return View(employeeModel);
         }
 
         // POST: Employees/Create
@@ -54,7 +64,7 @@ namespace MyInstitution.MVC.Controllers
         // more details, see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Create([Bind("Id,Forename,Surname,Image")] Employee employee)
+        public async Task<IActionResult> Create([Bind("Id,Forename,Surname,Image, GroupId")] Employee employee)
         {
             if (ModelState.IsValid)
             {
@@ -73,12 +83,22 @@ namespace MyInstitution.MVC.Controllers
                 return NotFound();
             }
 
-            var employee = await _context.Employees.FindAsync(id);
-            if (employee == null)
+            var employeeModel = new EmployeeModel();
+
+            employeeModel.Employee = await _context.Employees.FindAsync(id);
+            employeeModel.Groups = _context.Groups
+                      .Select(a => new SelectListItem()
+                      {
+                          Value = a.Id.ToString(),
+                          Text = a.Name
+                      })
+                      .ToList();
+
+            if (employeeModel.Employee == null)
             {
                 return NotFound();
             }
-            return View(employee);
+            return View(employeeModel);
         }
 
         // POST: Employees/Edit/5
@@ -86,7 +106,7 @@ namespace MyInstitution.MVC.Controllers
         // more details, see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Edit(int id, [Bind("Id,Forename,Surname,Image")] Employee employee)
+        public async Task<IActionResult> Edit(int id, [Bind("Id,Forename,Surname,Image, GroupId")] Employee employee)
         {
             if (id != employee.Id)
             {

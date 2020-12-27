@@ -9,23 +9,18 @@ using System.Threading.Tasks;
 
 namespace MyInstitution.MVC.Controllers
 {
-    public class DashboardController : Controller
+    public class PrivacyController : Controller
     {
         private readonly InstitutionContext _context;
 
-        public DashboardController(InstitutionContext context)
+        public PrivacyController(InstitutionContext context)
         {
             _context = context;
         }
 
         public async Task<IActionResult> Index()
         {
-            var dashboardModel = new DashboardModel
-            {
-               // dashboardModel = await _context.Events.ToListAsync()
-            };
-
-            return View();
+            return View(await _context.Events.ToListAsync());
         }
     }
 }

@@ -11,17 +11,17 @@ namespace MyInstitution.MVC.Models
         public int Id { get; set; }
 
         [Required]
+        [MaxLength(50)]
         public string Forename { get; set; }
 
         [Required]
+        [MaxLength(50)]
         public string Surname { get; set; }
 
         public string Image { get; set; }
 
+        [Display(Name = "Gruppe")]
         public int GroupId { get; set; }
-        //public List<UserRole> UserRoles { get; set; }
-
-        //public ICollection<Group> Groups { get; set; }
 
     }
 }

@@ -1,4 +1,5 @@
-﻿@model MyInstitution.MVC.Models.DutyRosterModel
+﻿@model MyInstitution.MVC.Models.DutyRosterIndexModel
+@using MyInstitution.MVC.Components
 
 @{
     ViewData["Title"] = "Index";
@@ -10,130 +11,501 @@
 <p>
     <a asp-action="Create">Create New</a>
 </p>
-<table class="table">
-    <thead>
-        <tr>
-            <th>
-                @Html.DisplayNameFor(model => model.DutyRoster.Year)
-            </th>
-            <th>
-                @Html.DisplayNameFor(model => model.DutyRoster.Week)
-            </th>
-            <th>
-                @Html.DisplayNameFor(model => model.DutyRoster.Day)
-            </th>
-            <th>
-                @Html.DisplayNameFor(model => model.DutyRoster.GroupId)
-            </th>
-            <th>
-                @Html.DisplayNameFor(model => model.DutyRoster.EmployeeId)
-            </th>
-            <th>
-                @Html.DisplayNameFor(model => model.DutyRoster.StartTime)
-            </th>
-            <th>
-                @Html.DisplayNameFor(model => model.DutyRoster.EndTime)
-            </th>
-            <th></th>
-        </tr>
-    </thead>
-    <tbody>
-        @foreach (var item in Model.DutyRosters)
-        {
+@*
+    <table class="table">
+        <thead>
             <tr>
-                <td>
-                    @Html.DisplayFor(modelItem => item.Year)
-                </td>
-                <td>
-                    @Html.DisplayFor(modelItem => item.Week)
-                </td>
-                <td>
-                    @Html.DisplayFor(modelItem => item.Day)
-                </td>
-                <td>
-                    @Html.DisplayFor(modelItem => item.GroupId)
-                </td>
-                <td>
-                    @Html.DisplayFor(modelItem => item.EmployeeId)
-                </td>
-                <td>
-                    @Html.DisplayFor(modelItem => item.StartTime)
-                </td>
-                <td>
-                    @Html.DisplayFor(modelItem => item.EndTime)
-                </td>
-                <td>
-                    <a asp-action="Edit" asp-route-id="@item.Id">Edit</a> |
-                    <a asp-action="Details" asp-route-id="@item.Id">Details</a> |
-                    <a asp-action="Delete" asp-route-id="@item.Id">Delete</a>
-                </td>
+                <th>
+                    @Html.DisplayNameFor(model => model.DutyRoster.Year)
+                </th>
+                <th>
+                    @Html.DisplayNameFor(model => model.DutyRoster.Week)
+                </th>
+                <th>
+                    @Html.DisplayNameFor(model => model.DutyRoster.Day)
+                </th>
+                <th>
+                    @Html.DisplayNameFor(model => model.DutyRoster.GroupId)
+                </th>
+                <th>
+                    @Html.DisplayNameFor(model => model.DutyRoster.EmployeeId)
+                </th>
+                <th>
+                    @Html.DisplayNameFor(model => model.DutyRoster.StartTime)
+                </th>
+                <th>
+                    @Html.DisplayNameFor(model => model.DutyRoster.EndTime)
+                </th>
+                <th></th>
             </tr>
-        }
-    </tbody>
-</table>
+        </thead>
+        <tbody>
+            @foreach (var item in Model.DutyRosters)
+            {
+                <tr>
+                    <td>
+                        @Html.DisplayFor(modelItem => item.Year)
+                    </td>
+                    <td>
+                        @Html.DisplayFor(modelItem => item.Week)
+                    </td>
+                    <td>
+                        @Html.DisplayFor(modelItem => item.Day)
+                    </td>
+                    <td>
+                        @Html.DisplayFor(modelItem => item.GroupId)
+                    </td>
+                    <td>
+                        @Html.DisplayFor(modelItem => item.EmployeeId)
+                    </td>
+                    <td>
+                        @Html.DisplayFor(modelItem => item.StartTime)
+                    </td>
+                    <td>
+                        @Html.DisplayFor(modelItem => item.EndTime)
+                    </td>
+                    <td>
+                        <a asp-action="Edit" asp-route-id="@item.Id">Edit</a> |
+                        <a asp-action="Details" asp-route-id="@item.Id">Details</a> |
+                        <a asp-action="Delete" asp-route-id="@item.Id">Delete</a>
+                    </td>
+                </tr>
+            }
+        </tbody>
+    </table>
+*@
+@*
+        <div class="roster">
+            <div class="container">
 
+
+                <div class="row">
+
+                    <div class="col-sm-9">
+                        <h3>Dienstplan</h3>
+
+                        <ul class="list-group" id="test" ondrop="drop(event, this, @Model.DutyRoster.Year, @Model.DutyRoster.Week, @group.Id, '@Model.DaysOfWeek[0].Date')" ondragover="allowDrop(event)" ondragleave="dragLeave(event)">
+                                @for (int i = 0; i < Model.DutyRosters.Count - 1; i++)
+                                {
+
+                                    <li class="list-group-item">@String.Format("{0:dd.MM.yyyy}", Model.DutyRosters[i].Day)</li>
+
+                                }
+                            </ul>
+
+
+        <div class="roster-week">
+
+            <div class="row">
+
+                <div class="col">
+                    Gruppe / Woche
+                </div>
+
+                @foreach (var item in Model.DaysOfWeek)
+                {
+                    <div class="col">
+                        @item.DayName
+                        @String.Format("{0:dd.MM.yyyy}", @item.Date)
+                    </div>
+                }
+
+            </div>
+
+            @foreach (var group in Model.Groups)
+            {
+                <div class="row">
+
+                    <div class="col">
+                        @group.Name
+                    </div>
+
+                    @for (int j = 0; j < Model.DaysOfWeek.Count - 1; j++)
+                    {
+                        <div class="col">
+
+                            @for (int i = 0; i < Model.DutyRosters.Count - 1; i++)
+                            {
+                                <ul class="list-group" id="roster-list-group-@Model.DutyRosters[i].GroupId-@Model.DutyRosters[i].Day" ondrop="drop(event, this, @Model.DutyRoster.Year, @Model.DutyRoster.Week, @group.Id, '@Model.DaysOfWeek[0].Date')" ondragover="allowDrop(event)" ondragleave="dragLeave(event)">
+
+                                    @if (Model.DaysOfWeek[j].Date == Model.DutyRosters[i].Day && Model.DutyRosters[i].GroupId == group.Id)
+                                    {
+                                        <li class="list-group-item">@String.Format("{0:dd.MM.yyyy}", Model.DutyRosters[i].Day)</li>
+                                    }
+                                </ul>
+                            }
+
+
+                        </div>
+                    }
+
+                </div>
+            }
+        </div>
+
+
+                </div>
+
+            </div>
+        </div>
+    </div>
+*@
 <div class="row">
 
-    <div class="col-sm-3">
-        <h3>Mitarbeiter</h3>
-
-    </div>
-    <div class="col-sm-9">
-        <h3>Dienstplan</h3>
-        <div class="row">
-            Jahr: @Model.DutyRoster.Year KW: @Model.DutyRoster.Week
-
-            <form asp-controller="DutyRosters" asp-action="Index">
-                <p>
-                    Year: <input type="number" name="SearchYear">
-                    Week: <input type="number" name="SearchWeek">
-                    <input type="submit" value="Filter" />
-                </p>
-            </form>
-
-        </div>
-        <div class="row">
-            <div class="sm">
-                Gruppe / Woche
-            </div>
-            <div class="m-2">
-                Montag
-            </div>
-            <div class="m-2">
-                Dienstag
-            </div>
-            <div class="m-2">
-                Mittwoch
-            </div>
-            <div class="m-2">
-                Donnerstag
-            </div>
-            <div class="m-2">
-                Freitag
-            </div>
-            <div class="m-2">
-                Samstag
-            </div>
-            <div class="m-2">
-                Sonntag
-            </div>
-        </div>
-        <a class="nav-link text-white" asp-area="" asp-controller="Privacy" asp-action="Index">
-            <i class="material-icons" style="font-size:20px;color:black; display: inline-flex;vertical-align: middle;">angle-left</i>
+    @*<a class="nav-link text-white" asp-area="" asp-controller="Privacy" asp-action="Index">
+            <i class="material-icons" >angle-left</i>
         </a>
 
         <a class="nav-link text-white" asp-area="" asp-controller="Privacy" asp-action="Index">
             <i class="material-icons" style="font-size:20px;color:white; display: inline-flex;vertical-align: middle;">angle-right</i>
-        </a>
+        </a>*@
 
-        @foreach (var group in Model.Groups)
-        {
-            <div class="row">
-                @group.Name
-            </div>
-        }
 
+    @*<form asp-controller="DutyRosters" asp-action="Index">
+            <p>
+                Year: <input type="number" name="SearchYear">
+                Week: <input type="number" name="SearchWeek">
+                <input type="submit" value="Filter" />
+            </p>
+        </form>*@
+
+    <div class="roster-week-navigation">
+        <form asp-controller="DutyRosters" asp-action="Index">
+            <input name="SearchYear" value="@Model.DutyRoster.Year" type="hidden">
+            <input name="SearchWeek" value="@Model.DutyRoster.Week" type="hidden">
+            <input name="WeekChange" value="-1" type="hidden">
+
+            <button type="submit" class="btn btn-labeled btn-default">
+                <span class="btn-label"><i class="material-icons" style=" font-size: 30px; color: black; display: inline-flex; vertical-align: middle;">navigate_before</i></span>
+                Zurück
+            </button>
+        </form>
+
+        <div class="week-name">
+            <h4>Jahr: @Model.DutyRoster.Year KW: @Model.DutyRoster.Week </h4>
+        </div>
+
+        <form asp-controller="DutyRosters" asp-action="Index">
+
+            <input name="SearchYear" value="@Model.DutyRoster.Year" type="hidden">
+            <input name="SearchWeek" value="@Model.DutyRoster.Week" type="hidden">
+            <input name="WeekChange" value="1" type="hidden">
+
+            <button type="submit" class="btn btn-labeled btn-default">
+                <span class="btn-label"><i class="material-icons" style=" font-size: 30px; color: black; display: inline-flex; vertical-align: middle;">navigate_next</i></span>
+                Weiter
+            </button>
+        </form>
     </div>
 
 </div>
+<div class="row">
 
+    <div class="col-sm-2">
+
+        <div class="card">
+            @( await Html.RenderComponentAsync<EmployeeListComponent>(RenderMode.ServerPrerendered, new { Employees = Model.Employees }));
+        </div>
+        @*<div id="dvleft">
+
+                <ul id="lstproducts" class="list-group">
+                    @foreach (var employee in Model.Employees)
+                    {
+                        <li id="employee-@employee.Id" class="list-group-item" draggable="true" ondragstart="drag(event)">@employee.Surname, @employee.Forename (@employee.Id)</li>
+                    }
+                </ul>
+            </div>*@
+
+    </div>
+
+    <div class="col-sm-10">
+
+        <h3>Dienstplan</h3>
+
+        <div class="card">
+            <table class="table">
+                <thead>
+                    <tr>
+                        <th>
+                            Gruppe
+                        </th>
+                        <th>
+                            @Html.DisplayFor(model => model.DaysOfWeek[0].Date)
+                            @Html.DisplayFor(model => model.DaysOfWeek[0].DayName)
+                        </th>
+                        <th>
+                            @Html.DisplayFor(model => model.DaysOfWeek[1].Date)
+                            @Html.DisplayFor(model => model.DaysOfWeek[1].DayName)
+                        </th>
+                        <th>
+                            @Html.DisplayFor(model => model.DaysOfWeek[2].Date)
+                            @Html.DisplayFor(model => model.DaysOfWeek[2].DayName)
+                        </th>
+                        <th>
+                            @Html.DisplayFor(model => model.DaysOfWeek[3].Date)
+                            @Html.DisplayFor(model => model.DaysOfWeek[3].DayName)
+                        </th>
+                        <th>
+                            @Html.DisplayFor(model => model.DaysOfWeek[4].Date)
+                            @Html.DisplayFor(model => model.DaysOfWeek[4].DayName)
+                        </th>
+                        @*<th>
+                                @Html.DisplayFor(model => model.DaysOfWeek[5].Date)
+                                @Html.DisplayFor(model => model.DaysOfWeek[5].DayName)
+                            </th>
+                            <th>
+                                @Html.DisplayFor(model => model.DaysOfWeek[6].Date)
+                                @Html.DisplayFor(model => model.DaysOfWeek[6].DayName)
+                            </th>*@
+
+                    </tr>
+                </thead>
+                <tbody>
+                    @foreach (var group in Model.Groups)
+                    {
+                        <tr>
+                            <td>
+                                @Html.DisplayFor(gr => group.Name)
+                            </td>
+
+                            <td>
+                                <ul class="list-group" id="roster-list-group-@group.Id-@Model.DaysOfWeek[0].Date" ondrop="drop(event, this, this, @Model.DutyRoster.Year, @Model.DutyRoster.Week, @group.Id, '@Model.DaysOfWeek[0].Date')" ondragover="allowDrop(event)" ondragleave="dragLeave(event)">
+                                    @foreach (var roster in Model.DutyRosters.Where(r => r.Day == Model.DaysOfWeek[0].Date && r.GroupId == group.Id))
+                                    {
+                                        @if (roster.Day == Model.DaysOfWeek[0].Date && roster.GroupId == group.Id)
+                                        {
+                                            <li class="list-group-item">
+                                                @Html.DisplayFor(modelItem => roster.EmployeeName)
+
+                                                <p>
+                                                    <a asp-action="Edit" asp-route-id="@roster.Id"><i class="material-icons">edit</i></a> |
+                                                    <a asp-action="Details" asp-route-id="@roster.Id"><i class="material-icons">read_more</i></a> |
+                                                    <a asp-action="Delete" asp-route-id="@roster.Id"><i class="material-icons">remove</i></a>
+
+                                                </p>
+
+                                                @*@using (Html.BeginForm("Delete", "DutyRosters", new { Id = @roster.Id, style = "display: inline;" }, FormMethod.Post))
+                                                    {
+                                                        <button>
+                                                            <i class="material-icons">remove</i>
+                                                        </button>
+                                                    }*@
+
+                                            </li>
+                                        }
+                                    }
+                                    <li class="list-group-item">
+                                        <a asp-action="Create"><i class="material-icons">add</i>Hinzufügen</a>
+                                    </li>
+                                </ul>
+                            </td>
+                            <td>
+                                <ul class="list-group" id="roster-list-group-@group.Id-@Model.DaysOfWeek[1].Date" ondrop="drop(event, this, @Model.DutyRoster.Year, @Model.DutyRoster.Week, @group.Id, '@Model.DaysOfWeek[1].Date')" ondragover="allowDrop(event)" ondragleave="dragLeave(event)">
+                                    @foreach (var roster in Model.DutyRosters.Where(r => r.Day == Model.DaysOfWeek[1].Date && r.GroupId == group.Id))
+                                    {
+                                        @if (roster.Day == Model.DaysOfWeek[1].Date && roster.GroupId == group.Id)
+                                        {
+                                            <li class="list-group-item">
+                                                @Html.DisplayFor(modelItem => roster.EmployeeName)
+                                                <p>
+                                                    <a asp-action="Edit" asp-route-id="@roster.Id"><i class="material-icons">edit</i></a> |
+                                                    <a asp-action="Details" asp-route-id="@roster.Id"><i class="material-icons">read_more</i></a> |
+                                                    <a asp-action="Delete" asp-route-id="@roster.Id"><i class="material-icons">remove</i></a>
+
+                                                </p>
+                                            </li>
+                                        }
+                                    }
+                                    <li class="list-group-item">
+                                        <a asp-action="Create"><i class="material-icons">add</i>Hinzufügen</a>
+                                    </li>
+                                </ul>
+                            </td>
+                            <td>
+                                <ul class="list-group" id="roster-list-group-@group.Id-Model.DaysOfWeek[2].Date" ondrop="drop(event, this, @Model.DutyRoster.Year, @Model.DutyRoster.Week, @group.Id, '@Model.DaysOfWeek[2].Date')" ondragover="allowDrop(event)" ondragleave="dragLeave(event)">
+                                    @foreach (var roster in Model.DutyRosters.Where(r => r.Day == Model.DaysOfWeek[2].Date && r.GroupId == group.Id))
+                                    {
+                                        @if (roster.Day == Model.DaysOfWeek[2].Date && roster.GroupId == group.Id)
+                                        {
+                                            <li class="list-group-item">
+                                                @Html.DisplayFor(modelItem => roster.EmployeeName)
+                                                <p>
+                                                    <a asp-action="Edit" asp-route-id="@roster.Id"><i class="material-icons">edit</i></a> |
+                                                    <a asp-action="Details" asp-route-id="@roster.Id"><i class="material-icons">read_more</i></a> |
+                                                    <a asp-action="Delete" asp-route-id="@roster.Id"><i class="material-icons">remove</i></a>
+
+                                                </p>
+                                            </li>
+                                        }
+                                    }
+                                    <li class="list-group-item">
+                                        <a asp-action="Create"><i class="material-icons">add</i>Hinzufügen</a>
+                                    </li>
+                                </ul>
+                            </td>
+                            <td>
+                                <ul class="list-group" id="roster-list-group-@group.Id-@Model.DaysOfWeek[3].Date" ondrop="drop(event, this, @Model.DutyRoster.Year, @Model.DutyRoster.Week, @group.Id, '@Model.DaysOfWeek[3].Date')" ondragover="allowDrop(event)" ondragleave="dragLeave(event)">
+                                    @foreach (var roster in Model.DutyRosters.Where(r => r.Day == Model.DaysOfWeek[3].Date && r.GroupId == group.Id))
+                                    {
+                                        @if (roster.Day == Model.DaysOfWeek[3].Date && roster.GroupId == group.Id)
+                                        {
+                                            <li class="list-group-item">
+                                                @Html.DisplayFor(modelItem => roster.EmployeeName)
+                                                <p>
+                                                    <a asp-action="Edit" asp-route-id="@roster.Id"><i class="material-icons">edit</i></a> |
+                                                    <a asp-action="Details" asp-route-id="@roster.Id"><i class="material-icons">read_more</i></a> |
+                                                    <a asp-action="Delete" asp-route-id="@roster.Id"><i class="material-icons">remove</i></a>
+
+                                                </p>
+                                            </li>
+                                        }
+                                    }
+                                    <li class="list-group-item">
+                                        <a asp-action="Create"><i class="material-icons">add</i>Hinzufügen</a>
+                                    </li>
+                                </ul>
+                            </td>
+                            <td>
+                                <ul class="list-group" id="roster-list-group-@group.Id-@Model.DaysOfWeek[4].Date" ondrop="drop(event, this, @Model.DutyRoster.Year, @Model.DutyRoster.Week, @group.Id, '@Model.DaysOfWeek[4].Date')" ondragover="allowDrop(event)" ondragleave="dragLeave(event)">
+                                    @foreach (var roster in Model.DutyRosters.Where(r => r.Day == Model.DaysOfWeek[4].Date && r.GroupId == group.Id))
+                                    {
+                                        @if (roster.Day == Model.DaysOfWeek[4].Date && roster.GroupId == group.Id)
+                                        {
+                                            <li class="list-group-item">
+                                                @Html.DisplayFor(modelItem => roster.EmployeeName)
+                                                <p>
+                                                    <a asp-action="Edit" asp-route-id="@roster.Id"><i class="material-icons">edit</i></a> |
+                                                    <a asp-action="Details" asp-route-id="@roster.Id"><i class="material-icons">read_more</i></a> |
+                                                    <a asp-action="Delete" asp-route-id="@roster.Id"><i class="material-icons">remove</i></a>
+
+                                                </p>
+                                            </li>
+                                        }
+                                    }
+                                    <li class="list-group-item">
+                                        <a asp-action="Create"><i class="material-icons">add</i>Hinzufügen</a>
+                                    </li>
+                                </ul>
+                            </td>
+                            @*<td>
+                                    <ul class="list-group" id="roster-list-group-@group.Id-@Model.DaysOfWeek[5].Date" ondrop="drop(event, this, @Model.DutyRoster.Year, @Model.DutyRoster.Week, @group.Id, '@Model.DaysOfWeek[5].Date')" ondragover="allowDrop(event)" ondragleave="dragLeave(event)">
+                                        @foreach (var roster in Model.DutyRosters.Where(r => r.Day == Model.DaysOfWeek[5].Date && r.GroupId == group.Id))
+                                        {
+                                            @if (roster.Day == Model.DaysOfWeek[5].Date && roster.GroupId == group.Id)
+                                            {
+                                                                                     <li class="list-group-item">
+                                                @Html.DisplayFor(modelItem => roster.EmployeeName)
+                                                <a asp-action="Edit" asp-route-id="@roster.Id"><i class="material-icons">edit</i></a> |
+                                                <a asp-action="Details" asp-route-id="@roster.Id"><i class="material-icons">read_more</i></a> |
+                                                <a asp-action="Delete" asp-route-id="@roster.Id"><i class="material-icons">remove</i></a>
+                                            </li>
+                                        }
+                                    }
+                                    <li class="list-group-item">
+                                        <a asp-action="Create"><i class="material-icons">add</i>Hinzufügen</a>
+                                    </li>
+                                    </ul>
+                                </td>
+                                <td>
+                                    <ul class="list-group" id="roster-list-group-@group.Id-@Model.DaysOfWeek[6].Date" ondrop="drop(event, this, @Model.DutyRoster.Year, @Model.DutyRoster.Week, @group.Id, '@Model.DaysOfWeek[6].Date')" ondragover="allowDrop(event)" ondragleave="dragLeave(event)">
+                                        @foreach (var roster in Model.DutyRosters.Where(r => r.Day == Model.DaysOfWeek[6].Date && r.GroupId == group.Id))
+                                        {
+                                            @if (roster.Day == Model.DaysOfWeek[6].Date && roster.GroupId == group.Id)
+                                            {
+                                                                <li class="list-group-item">
+                                                                    @Html.DisplayFor(modelItem => roster.EmployeeName)
+                                                                    <a asp-action="Edit" asp-route-id="@roster.Id"><i class="material-icons">edit</i></a> |
+                                                                    <a asp-action="Details" asp-route-id="@roster.Id"><i class="material-icons">read_more</i></a> |
+                                                                    <a asp-action="Delete" asp-route-id="@roster.Id"><i class="material-icons">remove</i></a>
+                                                                </li>
+                                                            }
+                                                        }
+                                                        <li class="list-group-item">
+                                                            <a asp-action="Create"><i class="material-icons">add</i>Hinzufügen</a>
+                                                        </li>
+                                    </ul>
+                                </td>*@
+
+                        </tr>
+                    }
+
+                </tbody>
+            </table>
+        </div>
+    </div>
+</div>
+
+
+<script>
+    function allowDrop(ev) {
+        ev.preventDefault();
+
+        //if (event.target.id.includes("roster-list-group")) {
+
+        if (ev.target.className == "list-group-item") {
+            ev.target.parentElement.style.border = "3px dotted blue";
+        }
+
+    }
+
+    function drag(ev) {
+        ev.dataTransfer.setData("id", ev.target.id);
+        ev.dataTransfer.setData("employee-name", ev.target.innerText);
+    }
+
+    function dragLeave(ev) {
+        if (ev.target.className == "list-group-item") {
+            ev.target.parentElement.style.border = "";
+        }
+        //else
+        if (ev.target.className == "list-group") {
+            ev.target.style.border = "";
+        }
+    }
+
+    function drop(ev, el, year, week, groupId, date) {
+        ev.preventDefault();
+
+        var data = ev.dataTransfer.getData("id");
+        var employeeId = parseInt(data.replace("employee-", ""));
+        var employeeName = ev.dataTransfer.getData("employee-name");
+
+        //if (ev.target.className == "list-group") {
+        //    ev.target.append(document.getElementById(data));
+        //} else
+        if (ev.target.className == "list-group-item") {
+            //var ulList = ev.target.parentElement; //.append();
+            //ulList.insertBefore(document.getElementById(data), ulList.firstChild)
+
+            var ulList = ev.target.parentElement;
+            //var cln = document.getElementById(data).cloneNode(true);
+            //ev.target.parentElement.append(cln);
+
+            var li = document.createElement('li');
+            li.className = "list-group-item"
+            li.innerHTML = employeeName +
+
+                ' <a href="DutyRosters/Edit/' + employeeId + '"><i class="material-icons">edit</i></a> |' +
+                ' <a href="DutyRosters/Details/' + employeeId + '"><i class="material-icons">read_more</i></a> '
+
+            ulList.insertBefore(li, ulList.firstChild)
+
+            ev.target.parentElement.style.border = "";
+
+            AddToCart({ EmployeeId: employeeId, GroupId: groupId, Year: year, Week: week, Day: date, StartTime: date, EndTime: date })
+
+        }
+    }
+
+    function AddToCart(_roster) {
+        $.ajax({
+            url: "DutyRosters/AddDutyRoster",
+            type: "POST",
+            data: { roster: _roster }
+        }).done(function () {
+            //alert("Added");
+        });
+    }
+</script>
+
+<script src="_framework/blazor.server.js"></script>

@@ -29,14 +29,12 @@
                 <span asp-validation-for="Text" class="text-danger"></span>
             </div>
             <div class="form-group">
-                <label asp-for="DateBegin" class="control-label"></label>
-                <input asp-for="DateBegin" class="form-control" />
-                <span asp-validation-for="DateBegin" class="text-danger"></span>
+                @Html.DisplayNameFor(e => e.DateBegin)
+                @Html.EditorFor(e => e.DateBegin)
             </div>
-            <div class="form-group">
-                <label asp-for="DateEnd" class="control-label"></label>
-                <input asp-for="DateEnd" class="form-control" />
-                <span asp-validation-for="DateEnd" class="text-danger"></span>
+            <div class="form-group">                
+                @Html.DisplayNameFor(e => e.DateEnd)
+                @Html.EditorFor(e => e.DateEnd)
             </div>
             <div class="form-group">
                 <label asp-for="Duration" class="control-label"></label>

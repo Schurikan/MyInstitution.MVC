@@ -76,6 +76,7 @@ namespace MyInstitution.MVC.Controllers
             }
 
             var client = await _context.Clients.FindAsync(id);
+            
             if (client == null)
             {
                 return NotFound();

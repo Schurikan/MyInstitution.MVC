@@ -18,25 +18,31 @@
             <th>
                 @Html.DisplayNameFor(model => model.Surname)
             </th>
+            <th>
+                @Html.DisplayNameFor(model => model.GroupId)
+            </th>
             <th></th>
         </tr>
     </thead>
     <tbody>
         @foreach (var item in Model)
         {
-            <tr>
-                <td>
-                    @Html.DisplayFor(modelItem => item.Forename)
-                </td>
-                <td>
-                    @Html.DisplayFor(modelItem => item.Surname)
-                </td>
-                <td>
-                    <a asp-action="Edit" asp-route-id="@item.Id">Edit</a> |
-                    <a asp-action="Details" asp-route-id="@item.Id">Details</a> |
-                    <a asp-action="Delete" asp-route-id="@item.Id">Delete</a>
-                </td>
-            </tr>
+        <tr>
+            <td>
+                @Html.DisplayFor(modelItem => item.Forename)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.Surname)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.GroupId)
+            </td>
+            <td>
+                <a asp-action="Edit" asp-route-id="@item.Id">Edit</a> |
+                <a asp-action="Details" asp-route-id="@item.Id">Details</a> |
+                <a asp-action="Delete" asp-route-id="@item.Id">Delete</a>
+            </td>
+        </tr>
         }
     </tbody>
 </table>
@@ -45,21 +51,21 @@
 
     @foreach (var employee in Model)
     {
-        <div class="card">
-            <div class="card-header">
-                @employee.Id
-            </div>
-            <div class="card-img" style="background-image: url('@employee.Image');"></div>
-            <div clsss="card-body">
-                <div class="card-title">
-                    @employee.Forename @employee.Surname
-                </div>
-            </div>
-            <div class="card-footer">
-                <a asp-action="Edit" asp-route-id="@employee.Id">Edit</a> |
-                <a asp-action="Details" asp-route-id="@employee.Id">Details</a> |
-                <a asp-action="Delete" asp-route-id="@employee.Id">Delete</a>
+    <div class="card">
+        <div class="card-header">
+            @employee.Id  @employee.Forename @employee.Surname
+        </div>
+        <div class="card-img" style="background-image: url('@employee.Image');"></div>
+        <div clsss="card-body">
+            <div class="card-title">
+               
             </div>
         </div>
+        <div class="card-footer">
+            <a asp-action="Edit" asp-route-id="@employee.Id">Edit</a> |
+            <a asp-action="Details" asp-route-id="@employee.Id">Details</a> |
+            <a asp-action="Delete" asp-route-id="@employee.Id">Delete</a>
+        </div>
+    </div>
     }
 </div>

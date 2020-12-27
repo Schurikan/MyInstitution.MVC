@@ -1,0 +1,55 @@
+﻿@using MyInstitution.MVC.Models
+@using Microsoft.AspNetCore.Components
+@using Microsoft.AspNetCore.Components.Web
+
+<h3>Mitarbeiter</h3>
+<p>
+    <input class="form-control" @bind="FilterValue" type="text" @onkeyup="KeyHandler" />
+
+    <button class="btn btn-primary" @onclick="(e => SetFilter())">
+        <i class="material-icons">edit</i>
+    </button>
+
+
+</p>
+
+<div>
+    <ul class="list-group">
+        @foreach (var employee in EmployeesFilter)
+        {           
+            <li id="employee-@employee.Id" class="list-group-item" draggable = "true" ondragstart = "drag(event)">@employee.Surname, @employee.Forename</li>
+        }
+    </ul>
+</div>
+
+@code {
+    [Parameter]
+    public List<Employee> Employees { get; set; }
+
+    public List<Employee> EmployeesFilter { get; set; }
+
+    private string FilterValue { get; set; }
+
+    void SetFilter()
+    {
+        if (FilterValue == String.Empty)
+            EmployeesFilter = Employees;
+        else
+            EmployeesFilter = Employees.Where(e => e.Surname.ToLower().Contains(FilterValue.ToLower()) ||
+                                                    e.Forename.ToLower().Contains(FilterValue.ToLower())).ToList();
+    }
+
+    protected override void OnParametersSet()
+    {
+        EmployeesFilter = Employees;
+    }
+
+    private void KeyHandler(KeyboardEventArgs e)
+    {
+        if (e.Key == "Enter")
+        {
+            SetFilter();
+        }
+    }
+
+}
