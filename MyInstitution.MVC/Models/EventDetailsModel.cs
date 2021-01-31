@@ -5,8 +5,8 @@ using System.Threading.Tasks;
 
 namespace MyInstitution.MVC.Models
 {
-    public class DashboardModel
+    public class EventDetailsModel
     {
-        public List<Event> Events { get; set; }
+        public EventDetails EventDetails { get; set; }
     }
 }

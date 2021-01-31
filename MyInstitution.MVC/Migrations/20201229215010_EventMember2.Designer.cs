@@ -3,15 +3,17 @@ using System;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 using MyInstitution.MVC.Data;
 
 namespace MyInstitution.MVC.Migrations
 {
     [DbContext(typeof(InstitutionContext))]
-    partial class InstitutionContextModelSnapshot : ModelSnapshot
+    [Migration("20201229215010_EventMember2")]
+    partial class EventMember2
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -150,42 +152,6 @@ namespace MyInstitution.MVC.Migrations
                     b.ToTable("Events");
                 });
 
-            modelBuilder.Entity("MyInstitution.MVC.Models.EventDetails", b =>
-                {
-                    b.Property<int>("EventDetailId")
-                        .ValueGeneratedOnAdd()
-                        .HasColumnType("int")
-                        .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
-
-                    b.Property<string>("ApplicationUserId")
-                        .HasColumnType("nvarchar(max)");
-
-                    b.Property<DateTime>("DateCreate")
-                        .HasColumnType("datetime2");
-
-                    b.Property<int>("EventId")
-                        .HasColumnType("int");
-
-                    b.Property<byte[]>("Image")
-                        .HasColumnType("varbinary(max)");
-
-                    b.Property<string>("Text")
-                        .IsRequired()
-                        .HasColumnType("nvarchar(1000)")
-                        .HasMaxLength(1000);
-
-                    b.Property<string>("Title")
-                        .IsRequired()
-                        .HasColumnType("nvarchar(100)")
-                        .HasMaxLength(100);
-
-                    b.HasKey("EventDetailId");
-
-                    b.HasIndex("EventId");
-
-                    b.ToTable("EventDetails");
-                });
-
             modelBuilder.Entity("MyInstitution.MVC.Models.EventMember", b =>
                 {
                     b.Property<int>("Id")
@@ -225,15 +191,6 @@ namespace MyInstitution.MVC.Migrations
                     b.HasKey("Id");
 
                     b.ToTable("Groups");
-                });
-
-            modelBuilder.Entity("MyInstitution.MVC.Models.EventDetails", b =>
-                {
-                    b.HasOne("MyInstitution.MVC.Models.Event", "Event")
-                        .WithMany()
-                        .HasForeignKey("EventId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
                 });
 #pragma warning restore 612, 618
         }

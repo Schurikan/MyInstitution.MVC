@@ -1,8 +1,7 @@
-﻿using System;
-using System.Collections.Generic;
+﻿using Microsoft.AspNetCore.Http;
+using System;
 using System.ComponentModel.DataAnnotations;
-using System.Linq;
-using System.Threading.Tasks;
+using System.ComponentModel.DataAnnotations.Schema;
 
 namespace MyInstitution.MVC.Models
 {
@@ -30,6 +29,9 @@ namespace MyInstitution.MVC.Models
         public int Duration { get; set;}
 
         public string Image { get; set; }
+
+        [NotMapped]
+        public IFormFile FormFile { get; set; }
 
         public bool Archived { get; set; }
     }

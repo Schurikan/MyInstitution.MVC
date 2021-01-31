@@ -1,0 +1,72 @@
+﻿@model EventModel
+@using Microsoft.AspNetCore.Identity
+@using MyInstitution.MVC.Areas.Identity.Data
+
+@inject SignInManager<ApplicationUser> SignInManager
+@inject UserManager<ApplicationUser> UserManager
+
+<div class="col-12">
+    <div class="event">
+        <div class="card">
+            <div class="card-header">
+                @String.Format("{0:dd.MM.yyyy}", @Model.Event.DateBegin) @Model.Event.Name (@Model.Event.Id)
+            </div>
+            @* <div class="card-img" style="background-image: url('_event.Image');"></div>*@
+            <div clsss="card-body">
+                @*                            <h5 class="card-title">Card title</h5>*@
+                @* <h6 class="card-subtitle mb-2 text-muted">Card subtitle</h6>*@
+                <h4 class="card-title">
+                    @* @String.Format("{0:dd.MM.yyyy}", _event.DateBegin) _event.Name*@
+
+                </h4>
+                @* <h5 class="card-subtitle"> </h5>*@
+                <div class="card-text">
+                    <p>
+                        @Model.Event.Summary
+                    </p>
+                </div>
+                <div class="card-text">
+                    <p>
+                        @*@Html.DisplayNameFor(e => _Event.DateBegin) @String.Format("{0:HH:mm}", _event.DateBegin)
+
+                            @if (_Event.DateEnd != null)
+                            {
+                                <span>-</span> @Html.DisplayNameFor(e => _Event.DateEnd) @String.Format("{0:HH:mm}", _event.DateEnd)
+
+                            }*@
+                    </p>
+                </div>
+
+            </div>
+            <div class="card-footer">
+                <small class="text-muted">
+                    <button type="button" class="btn btn-info">
+                        <span class="badge badge-light">@Model.NumberOfMembers</span> Teilnehmer
+                    </button>
+
+                </small>
+
+                @if (Model.UserIsMember)
+                {
+                    <button id="event-member-status-@Model.Event.Id" onclick="MemberStatusChanged(@Model.Event.Id, '@UserManager.GetUserId(User)');"
+                            type="button" class="btn btn-danger" data-toggle="button" aria-pressed="true" autocomplete="off">
+                        Austragen
+                    </button>
+                }
+                else
+                {
+                    <button id="event-member-status-@Model.Event.Id" onclick="MemberStatusChanged(@Model.Event.Id, '@UserManager.GetUserId(User)');"
+                            type="button" class="btn btn-success" data-toggle="button" aria-pressed="false" autocomplete="off">
+                        Teilnehmen
+                    </button>
+                }
+
+                <a asp-controller="Events" asp-action="Details" asp-route-id="@Model.Event.Id">
+                    <input type="button" class="btn btn-primary" value="Details" />
+                </a>
+
+            </div>
+        </div>
+    </div>
+</div>
+

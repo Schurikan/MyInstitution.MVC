@@ -50,19 +50,30 @@ namespace MyInstitution.MVC.Controllers
         }
 
         // POST: EventMembers/Create
-        // To protect from overposting attacks, enable the specific properties you want to bind to, for 
+        // To protect f overposting attacks, enable the specific properties you want to bind to, for 
         // more details, see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Create([Bind("Id,EventId,ApplicationUserId")] EventMember eventMember)
+        public async Task<IActionResult> Create(EventMember eventMember)
         {
-            if (ModelState.IsValid)
+            //if (ModelState.IsValid)
+            //{
+            //}
+
+            var eventMembers = from e in _context.EventMembers
+                               where e.EventId == eventMember.EventId && e.ApplicationUserId == eventMember.ApplicationUserId
+                               select e;
+
+            if(eventMembers.Count() == 0)
             {
                 _context.Add(eventMember);
                 await _context.SaveChangesAsync();
-                return RedirectToAction(nameof(Index));
             }
-            return View(eventMember);
+
+            return Redirect("/Privacy");
+            // return RedirectToAction(nameof(Index));
+
+            //return View(eventMember);
         }
 
         // GET: EventMembers/Edit/5
@@ -148,6 +159,37 @@ namespace MyInstitution.MVC.Controllers
         private bool EventMemberExists(int id)
         {
             return _context.EventMembers.Any(e => e.Id == id);
+        }
+
+        [HttpPost]
+        public async Task<IActionResult> StatusChanged(EventMember eventMember)
+        {
+            try
+            {
+                var member = await _context.EventMembers.Where(e => e.EventId == eventMember.EventId && e.ApplicationUserId == eventMember.ApplicationUserId).FirstOrDefaultAsync();
+
+                if (member == null)
+                {
+                    await _context.AddAsync(eventMember);
+                }
+                else
+                {
+
+                    _context.EventMembers.Remove(member);
+                }
+
+                await _context.SaveChangesAsync();
+
+                return View();
+            }
+            catch (Exception ex)
+            {
+
+                throw;
+            }
+
+
+
         }
     }
 }

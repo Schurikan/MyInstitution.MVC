@@ -1,4 +1,10 @@
 ﻿@model MyInstitution.MVC.Models.PrivacyModel
+@using MyInstitution.MVC.Components
+
+@using Microsoft.AspNetCore.Identity
+@using MyInstitution.MVC.Areas.Identity.Data
+@inject SignInManager<ApplicationUser> SignInManager
+@inject UserManager<ApplicationUser> UserManager
 
 @{
     ViewData["Title"] = "Privacy Policy";
@@ -11,75 +17,60 @@ Anstehende Termine
 
 Anstehende bzw. vergangende Veranstaltungen
 Veranstaltungen mit den Kinder im Wald oder mit Eltern / Elterabend bzw. Elter-Kindgespräch
-
-<h2>Events</h2>
-
 <div class="row">
-    @if (Model.Events != null)
-    {
-        @foreach (var _event in Model.Events.OrderByDescending(e => e.DateBegin))
-        {
-            <div class="col-12">
-                <div class="event">
-                    <div class="card">
-                        <div class="card-header">
-
-                            <h3>@String.Format("{0:dd.MM.yyyy}", @_event.DateBegin) @_event.Name </h3>
-                        </div>
-                        <div class="card-img" style="background-image: url('@_event.Image');"></div>
-                        <div clsss="card-body">
-                            @*                            <h5 class="card-title">Card title</h5>*@
-                            @* <h6 class="card-subtitle mb-2 text-muted">Card subtitle</h6>*@
-                            <h5 class="card-title">
-                                @_event.Summary
-                            </h5>
-
-                            <div class="card-text">
-                                <p>
-                                    @Html.DisplayNameFor(e => _event.DateBegin)
-                                    @String.Format("{0:HH:mm}", @_event.DateBegin)
-
-                                </p>
-
-                                @if (_event.DateEnd != null)
-                                {
-                                    <p>
-
-                                        @Html.DisplayNameFor(e => _event.DateEnd)
-                                        @String.Format("{0:HH:mm}", @_event.DateEnd)
-                                    </p>
-                                }
-                            </div>
-
-                        </div>
-                        <div class="card-footer">
-                            <small class="text-muted">
-                                <button type="button" class="btn btn-success">
-                                    Teilnehmer <span class="badge badge-light">4</span>
-                                </button>
-
-                            </small>
-                            <span style="display:inline-block;">Teilnehmen</span>
-
-                            <div class="custom-control custom-switch" style="display:inline-block;">
-
-                                <input type="checkbox" class="custom-control-input" id="customSwitch1">
-                                <label class="custom-control-label" for="customSwitch1">
-
-                                </label>
-                            </div>
-                            <span style="display:inline-block;">Austragen</span>
-
-
-                            <a asp-controller="Events" asp-action="Details" asp-route-id="@_event.Id">
-                                <input type="button" class="btn btn-primary" value="Details" />
-                            </a>
-
-                        </div>
-                    </div>
-                </div>
+    <div class="col-sm-6">
+        <div class="card">
+            <div class="card-header">
+                <h3>Events</h3>
             </div>
-        }
-    }
+            <div class="form-card">
+                @if (Model.Events != null)
+                {
+                    @foreach (var _event in Model.Events.OrderByDescending(e => e.Event.DateBegin))
+                    {
+                        <div id="event-@_event.Event.Id">
+
+                            @await Html.PartialAsync("~/Views/Shared/_EventPartial.cshtml", _event)
+
+                        </div>
+
+                    }
+                }
+            </div>
+        </div>
+    </div>
+    <div class="col-sm-6">
+        <div class="card">
+            <div class="card-header">
+                <h3>Weiters</h3>
+            </div>
+            <div class="form-card">
+            </div>
+        </div>
+    </div>
 </div>
 
+
+
+<script>
+
+    function MemberStatusChanged(eventId, userId) {
+
+        var _eventMember = { Id: 0, EventId: eventId, ApplicationUserId: userId };
+
+        $.ajax({
+            url: "EventMembers/StatusChanged",
+            type: "POST",
+            data: {
+                eventMember: _eventMember
+            },
+            complete: function (data) {
+                RefreshEvent(_eventMember.EventId);
+            }
+        });
+    }
+
+    function RefreshEvent(eventId) {
+        $("#event-" + eventId).load("Privacy/GetEvent/" + eventId);
+    };
+</script>

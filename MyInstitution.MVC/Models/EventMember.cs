@@ -9,6 +9,6 @@ namespace MyInstitution.MVC.Models
     {
         public int Id { get; set; }
         public int EventId { get; set; }
-        public int ApplicationUserId { get; set; }
+        public string ApplicationUserId { get; set; }
     }
 }

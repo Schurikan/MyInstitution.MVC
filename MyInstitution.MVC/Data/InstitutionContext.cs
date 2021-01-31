@@ -25,11 +25,13 @@ namespace MyInstitution.MVC.Data
         /// </summary>
        // public DbSet<Employee> Employees { get; set; }
 
-        public DbSet<MyInstitution.MVC.Models.Employee> Employees { get; set; }
+        public DbSet<Employee> Employees { get; set; }
 
         public DbSet<Group> Groups { get; set; }
 
         public DbSet<Event> Events { get; set; }
+
+        public DbSet<EventDetails> EventDetails { get; set; }
 
         public DbSet<EventMember> EventMembers { get; set; }
 

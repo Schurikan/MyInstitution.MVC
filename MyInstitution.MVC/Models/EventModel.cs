@@ -10,6 +10,14 @@ namespace MyInstitution.MVC.Models
     {
        public Event Event { get; set; }
 
-        public List<EventMember> EventMembers { get; set; } 
+        public List<EventMember> EventMembers { get; set; }
+
+        public List<EventDetails> EventDetails { get; set; }
+
+        public EventDetails NewEventDetail { get; set; }
+
+        public int NumberOfMembers { get; set; }
+
+        public bool UserIsMember { get; set; }
     }
 }
