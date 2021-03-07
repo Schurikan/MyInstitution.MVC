@@ -52,6 +52,8 @@
         </dt>
         <dd class="col-sm-10">
             @Html.DisplayFor(model => model.Event.Image)
+            <img src="/img/events/@Model.Event.Image" class="img-fluid" alt="Responsive image">
+
         </dd>
     </dl>
 </div>
@@ -69,6 +71,8 @@
                 <div class="card-header">
                     @eventDetail.EventDetailId | @eventDetail.Title | @eventDetail.ApplicationUserId
                 </div>
+                <img src="/img/event-details/@eventDetail.Image" class="card-img-top" alt="Responsive image">
+
                 @*<div class="card-img-top" style="background-image: url('@eventDetail.Image');"></div>*@
                 @*<img src="@eventDetail.Image" class="card-img" alt="#">*@
                 @*<div class="card-img-top" style="background-image: url('@eventDetail.Image');"></div>*@
@@ -131,14 +135,3 @@
 
     }
 </div>
-<form enctype="multipart/form-data" method="post">
-    <dl>
-        <dt>
-            <label asp-for="@Model.Event.Name"></label>
-        </dt>
-        <dd>
-            <input asp-for="@Model.Event.Name" type="file">
-        </dd>
-    </dl>
-    <input asp-page-handler="Upload" class="btn" type="submit" value="Upload">
-</form>

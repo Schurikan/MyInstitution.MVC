@@ -41,10 +41,8 @@
                 @Html.DisplayFor(modelItem => item.Text)
             </td>
             <td>
-               @* <img src="@(((Dictionary<long, String>)ViewBag.Images)[item.EventDetailId])" width="50px" height="50px" alt="Alternate Text" />*@
-
-                
-                <!--Auskommentiert##--> @* @Html.DisplayFor(modelItem => item.Image)*@
+                @Html.DisplayFor(modelItem => item.Image)
+                <img src="/img/event-details/@item.Image" class="img-fluid" alt="Responsive image">
             </td>
             <td>
                 <a asp-action="Edit" asp-route-id="@item.EventDetailId">Edit</a> |

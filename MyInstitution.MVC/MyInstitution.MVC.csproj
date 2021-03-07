@@ -23,6 +23,7 @@
   <ItemGroup>
     <Folder Include="Models\ViewModels\" />
     <Folder Include="Services\" />
+    <Folder Include="wwwroot\img\events\" />
   </ItemGroup>
 
 </Project>

@@ -11,7 +11,7 @@
 <hr />
 <div class="row">
     <div class="col-md-4">
-        <form asp-action="Create">
+        <form asp-action="Create" enctype="multipart/form-data">
             <div asp-validation-summary="ModelOnly" class="text-danger"></div>
             <div class="form-group">
                 <label asp-for="Name" class="control-label"></label>
@@ -20,19 +20,19 @@
             </div>
             <div class="form-group">
                 <label asp-for="Summary" class="control-label"></label>
-                <input asp-for="Summary" class="form-control" />
+                <textarea asp-for="Summary" class="form-control" rows="2"></textarea>
                 <span asp-validation-for="Summary" class="text-danger"></span>
             </div>
             <div class="form-group">
                 <label asp-for="Text" class="control-label"></label>
-                <input asp-for="Text" class="form-control" />
+                <textarea asp-for="Text" class="form-control" rows="4"></textarea>
                 <span asp-validation-for="Text" class="text-danger"></span>
             </div>
             <div class="form-group">
                 @Html.DisplayNameFor(e => e.DateBegin)
                 @Html.EditorFor(e => e.DateBegin)
             </div>
-            <div class="form-group">                
+            <div class="form-group">
                 @Html.DisplayNameFor(e => e.DateEnd)
                 @Html.EditorFor(e => e.DateEnd)
             </div>
@@ -41,10 +41,13 @@
                 <input asp-for="Duration" class="form-control" />
                 <span asp-validation-for="Duration" class="text-danger"></span>
             </div>
+
             <div class="form-group">
-                <label asp-for="Image" class="control-label"></label>
-                <input asp-for="Image" class="form-control" />
-                <span asp-validation-for="Image" class="text-danger"></span>
+                <label asp-for="FormFile" class="control-label"></label>
+                <div class="custom-file">
+                    <input asp-for="FormFile" type="file" class="custom-file-input" id="customFile">
+                    <label asp-for="FormFile" class="custom-file-label" for="customFile">Datei auswählen</label>
+                </div>
             </div>
             <div class="form-group">
                 <input type="submit" value="Create" class="btn btn-primary" />
@@ -57,6 +60,20 @@
     <a asp-action="Index">Back to List</a>
 </div>
 
+
 @section Scripts {
+
+    <script type="text/javascript">
+
+        $('.custom-file input').change(function (e) {
+            var files = [];
+            for (var i = 0; i < $(this)[0].files.length; i++) {
+                files.push($(this)[0].files[i].name);
+            }
+            $(this).next('.custom-file-label').html(files.join(', '));
+        });
+
+    </script>
+
     @{await Html.RenderPartialAsync("_ValidationScriptsPartial");}
 }

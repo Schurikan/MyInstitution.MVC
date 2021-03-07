@@ -4,6 +4,7 @@ using System.ComponentModel.DataAnnotations;
 using System.IO;
 using System.Linq;
 using System.Threading.Tasks;
+using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.Rendering;
@@ -18,11 +19,12 @@ namespace MyInstitution.MVC.Controllers
     {
         private readonly InstitutionContext _context;
         private UserManager<ApplicationUser> _userManager;
-
-        public EventDetailsController(InstitutionContext context, UserManager<ApplicationUser> userManager)
+        private IWebHostEnvironment _hostingEnvironment;
+        public EventDetailsController(InstitutionContext context, UserManager<ApplicationUser> userManager, IWebHostEnvironment environment)
         {
             _context = context;
             _userManager = userManager;
+            _hostingEnvironment = environment;
         }
 
         // GET: EventDetails
@@ -32,11 +34,11 @@ namespace MyInstitution.MVC.Controllers
 
             Dictionary<long, string> mydict = new Dictionary<long, string>();
 
-            foreach (var item in institutionContext)
-            {
-                if (item.Image != null)
-                    mydict.Add(item.EventDetailId, ViewImage(item.Image));
-            }
+            //foreach (var item in institutionContext)
+            //{
+            //    if (item.Image != null)
+            //        mydict.Add(item.EventDetailId, ViewImage(item.Image));
+            //}
 
             ViewBag.Images = mydict;
 
@@ -59,7 +61,7 @@ namespace MyInstitution.MVC.Controllers
                 return NotFound();
             }
 
-            ViewBag.Image = ViewImage(eventDetails.Image);
+            //ViewBag.Image = ViewImage(eventDetails.Image);
 
             return View(eventDetails);
         }
@@ -93,6 +95,26 @@ namespace MyInstitution.MVC.Controllers
 
                 _context.Add(eventDetails);
                 await _context.SaveChangesAsync();
+
+                if (eventDetails.FormFile != null)
+                {
+                    var newImageName = Path.Combine(eventDetails.EventDetailId.ToString(), Path.GetExtension(eventDetails.FormFile.FileName));
+                    eventDetails.Image = newImageName;
+                    _context.Update(eventDetails);
+                    await _context.SaveChangesAsync();
+
+                    // full path to file in temp location
+                    var filePath = Path.GetTempFileName();
+                    var uploadsFolder = Path.Combine(_hostingEnvironment.WebRootPath, "img/event-details");
+                    if (!Directory.Exists(uploadsFolder))
+                    {
+                        Directory.CreateDirectory(uploadsFolder);
+                    }
+                    var fullPath = Path.Combine(uploadsFolder, eventDetails.Image);
+
+                    if (!Directory.Exists(fullPath))
+                        eventDetails.FormFile.CopyTo(new FileStream(fullPath, FileMode.Create));
+                }
                 return RedirectToAction(nameof(Index));
             }
             ViewData["EventId"] = new SelectList(_context.Events, "Id", "Name", eventDetails.EventId);
@@ -141,6 +163,24 @@ namespace MyInstitution.MVC.Controllers
             {
                 try
                 {
+                    if (eventDetails.FormFile != null)
+                    {
+                        var newImageName = eventDetails.EventDetailId.ToString() + Path.GetExtension(eventDetails.FormFile.FileName);
+                        eventDetails.Image = newImageName;
+
+                        // full path to file in temp location
+                        var filePath = Path.GetTempFileName();
+                        var uploadsFolder = Path.Combine(_hostingEnvironment.WebRootPath, "img/event-details");
+                        if (!Directory.Exists(uploadsFolder))
+                        {
+                            Directory.CreateDirectory(uploadsFolder);
+                        }
+                        var fullPath = Path.Combine(uploadsFolder, eventDetails.Image);
+
+                        if (!Directory.Exists(fullPath))
+                            eventDetails.FormFile.CopyTo(new FileStream(fullPath, FileMode.Create));
+                    }
+
                     _context.Update(eventDetails);
                     await _context.SaveChangesAsync();
                 }
@@ -206,9 +246,9 @@ namespace MyInstitution.MVC.Controllers
 
                 _context.Add(eventModel.NewEventDetail);
                 await _context.SaveChangesAsync();
-               // return RedirectToAction("Index", "Events", eventModel.NewEventDetail.EventId); // (nameof(Index));
+                // return RedirectToAction("Index", "Events", eventModel.NewEventDetail.EventId); // (nameof(Index));
 
-                return RedirectToAction("Details", "Events", new { id = eventModel.NewEventDetail.EventId}); // (nameof(Index));
+                return RedirectToAction("Details", "Events", new { id = eventModel.NewEventDetail.EventId }); // (nameof(Index));
             }
             //return redirectto(nameof(Index));
             return View(eventModel.Event);
