@@ -92,6 +92,7 @@ namespace MyInstitution.MVC.Controllers
             {
                 eventDetails.DateCreate = DateTime.Now;
                 eventDetails.ApplicationUserId = _userManager.GetUserId(User);
+                eventDetails.ApplicationUser = await _userManager.GetUserAsync(User);
 
                 _context.Add(eventDetails);
                 await _context.SaveChangesAsync();
@@ -243,6 +244,7 @@ namespace MyInstitution.MVC.Controllers
             {
                 eventModel.NewEventDetail.DateCreate = DateTime.Now;
                 eventModel.NewEventDetail.ApplicationUserId = _userManager.GetUserId(User);
+                eventModel.NewEventDetail.ApplicationUser = await _userManager.GetUserAsync(User);
 
                 _context.Add(eventModel.NewEventDetail);
                 await _context.SaveChangesAsync();

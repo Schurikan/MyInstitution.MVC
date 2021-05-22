@@ -1,5 +1,6 @@
 ﻿using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
+using MyInstitution.MVC.Areas.Identity.Data;
 using System;
 using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
@@ -35,5 +36,9 @@ namespace MyInstitution.MVC.Models
         public DateTime DateCreate { get; set; }
 
         public string ApplicationUserId { get; set; }
+        /// <summary>
+        /// Creator of EventDetail.
+        /// </summary>
+        public ApplicationUser ApplicationUser { get; set; }
     }
 }

@@ -61,8 +61,12 @@ namespace MyInstitution.MVC.Controllers
 
             int currentUserIsMemberCount = 0;
             string applicationUserId = _userManager.GetUserId(User);
-
+            
             eventModel.EventDetails = await _context.EventDetails.Where(e => e.EventId == eventModel.Event.Id).ToListAsync();
+            foreach (var item in eventModel.EventDetails)
+            {
+                item.ApplicationUser = await _userManager.GetUserAsync(User);
+            }
             eventModel.EventMembers = await _context.EventMembers.Where(e => e.EventId == eventModel.Event.Id).ToListAsync();
             eventModel.NumberOfMembers = await _context.EventMembers.Where(e => e.EventId == eventModel.Event.Id).CountAsync();
             currentUserIsMemberCount = eventModel.EventMembers.Where(e => e.ApplicationUserId.Equals(applicationUserId)).Count();

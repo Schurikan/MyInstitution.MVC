@@ -57,6 +57,62 @@
         </dd>
     </dl>
 </div>
+<div class="row">
+    <div class="col-lg-3 col-md-12">
+        <img src="/img/events/@Model.Event.Image" class="img-fluid" alt="Responsive image">
+    </div>
+    <div class="col-lg-9 col-md-12">
+        <div class="col-md-12">
+            <div class="form-group">
+                <label asp-for="@Model.Event.Name" class="control-label"></label>
+                <input asp-for="@Model.Event.Name" class="form-control" />
+            </div>
+
+            @Html.DisplayNameFor(model => model.Event.Name)
+            </dt>
+            <dd class="col-sm-10">
+                @Html.DisplayFor(model => model.Event.Name)
+            </dd>
+            <dt class="col-sm-2">
+                @Html.DisplayNameFor(model => model.Event.Summary)
+            </dt>
+            <dd class="col-sm-10">
+                @Html.DisplayFor(model => model.Event.Summary)
+            </dd>
+            <dt class="col-sm-2">
+                @Html.DisplayNameFor(model => model.Event.Text)
+            </dt>
+            <dd class="col-sm-10">
+                @Html.DisplayFor(model => model.Event.Text)
+            </dd>
+            <dt class="col-sm-2">
+                @Html.DisplayNameFor(model => model.Event.DateBegin)
+            </dt>
+            <dd class="col-sm-10">
+                @Html.DisplayFor(model => model.Event.DateBegin)
+            </dd>
+            <dt class="col-sm-2">
+                @Html.DisplayNameFor(model => model.Event.DateEnd)
+            </dt>
+            <dd class="col-sm-10">
+                @Html.DisplayFor(model => model.Event.DateEnd)
+            </dd>
+            <dt class="col-sm-2">
+                @Html.DisplayNameFor(model => model.Event.Duration)
+            </dt>
+            <dd class="col-sm-10">
+                @Html.DisplayFor(model => model.Event.Duration)
+            </dd>
+            <dt class="col-sm-2">
+                @Html.DisplayNameFor(model => model.Event.Image)
+            </dt>
+            <dd class="col-sm-10">
+                @Html.DisplayFor(model => model.Event.Image)
+                <img src="/img/events/@Model.Event.Image" class="img-fluid" alt="Responsive image">
+        </div>
+    </div>
+    
+</div>
 <div>
     <a asp-action="Edit" asp-route-id="@Model.Event.Id">Edit</a> |
     <a asp-action="Index">Back to List</a>
@@ -69,17 +125,27 @@
         <div class="col-12">
             <div class="card h-100">
                 <div class="card-header">
-                    @eventDetail.EventDetailId | @eventDetail.Title | @eventDetail.ApplicationUserId
+                    @eventDetail.EventDetailId | @eventDetail.Title | @eventDetail.ApplicationUser.UserName
                 </div>
-                <img src="/img/event-details/@eventDetail.Image" class="card-img-top" alt="Responsive image">
+                <div class="row">
+                    <div class="col-md-4">
+                        @*Image*@
+                        <img src="/img/event-details/@eventDetail.Image" class="card-img-top" alt="Responsive image">
+
+                    </div>
+                    <div class="col-md-8">
+                        <div class="card-body">
+                            <h5 class="card-title">@eventDetail.Title</h5>
+                            <p class="card-text">@eventDetail.Text</p>
+                        </div>
+                    </div>
+                </div>
+                @*<img src="/img/event-details/@eventDetail.Image" class="card-img-top" alt="Responsive image">*@
 
                 @*<div class="card-img-top" style="background-image: url('@eventDetail.Image');"></div>*@
                 @*<img src="@eventDetail.Image" class="card-img" alt="#">*@
                 @*<div class="card-img-top" style="background-image: url('@eventDetail.Image');"></div>*@
-                <div class="card-body">
-                    <h5 class="card-title">@eventDetail.Title</h5>
-                    <p class="card-text">@eventDetail.Text</p>
-                </div>
+
                 <div class="card-footer">
                     <small class="text-muted">
                         <a asp-controller="EventDetails" asp-action="Edit" asp-route-id="@eventDetail.EventDetailId">Edit</a> |
