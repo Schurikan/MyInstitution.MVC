@@ -37,5 +37,9 @@ namespace MyInstitution.MVC.Data
 
         public DbSet<DutyRoster> DutyRosters { get; set; }
 
+        public DbSet<MyInstitution.MVC.Models.Movie> Movie { get; set; }
+
+        public DbSet<MyInstitution.MVC.Models.Test> Test { get; set; }
+
     }
 }

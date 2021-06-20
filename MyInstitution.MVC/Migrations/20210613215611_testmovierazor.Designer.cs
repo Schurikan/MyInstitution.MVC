@@ -3,15 +3,17 @@ using System;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 using MyInstitution.MVC.Data;
 
 namespace MyInstitution.MVC.Migrations
 {
     [DbContext(typeof(InstitutionContext))]
-    partial class InstitutionContextModelSnapshot : ModelSnapshot
+    [Migration("20210613215611_testmovierazor")]
+    partial class testmovierazor
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -303,21 +305,6 @@ namespace MyInstitution.MVC.Migrations
                     b.HasKey("ID");
 
                     b.ToTable("Movie");
-                });
-
-            modelBuilder.Entity("MyInstitution.MVC.Models.Test", b =>
-                {
-                    b.Property<int>("ID")
-                        .ValueGeneratedOnAdd()
-                        .HasColumnType("int")
-                        .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
-
-                    b.Property<string>("Title")
-                        .HasColumnType("nvarchar(max)");
-
-                    b.HasKey("ID");
-
-                    b.ToTable("Test");
                 });
 
             modelBuilder.Entity("MyInstitution.MVC.Models.EventDetails", b =>

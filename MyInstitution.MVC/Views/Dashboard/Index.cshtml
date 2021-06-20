@@ -8,7 +8,36 @@
 <p>Use this page to detail your site's privacy policy.</p>
 
 <div class="row">
-    <div class="col-sm-3">
+    <div class="col-sm-5">
+        <h2>Meine Events</h2>
+        <div class="form-card">
+            @if (Model.Events != null)
+            {
+                @foreach (var _event in Model.Events)
+                {
+                    <div class="card">
+                        <div class="card-header">
+                            @String.Format("{0:dd.MM.yyyy}", @_event.DateBegin) @_event.Name (@_event.Id)
+                        </div>
+                        <div class="card-body">
+                            <div class="card-text">
+                                <p>
+                                    @_event.Summary
+                                </p>
+                            </div>
+                        </div>
+                        <div class="card-footer">
+                            <a asp-controller="Events" asp-action="Details" asp-route-id="@_event.Id">
+                                <input type="button" class="btn btn-primary" value="Details" />
+                            </a>
+                        </div>
+                    </div>
+
+                }
+            }
+        </div>
+    </div>
+    <div class="col-sm-5">
         <div class="card">
             <h5 class="card-header">Featured</h5>
             <div class="card-body">
@@ -19,18 +48,7 @@
             </div>
         </div>
     </div>
-    <div class="col-sm-6">
-        <div class="card">
-            <h5 class="card-header">Featured</h5>
-            <div class="card-body">
-                <h5 class="card-title">Special title treatment</h5>
-                <p class="card-text">With supporting text below as a natural lead-in to additional content.</p>
-                <a href="#" class="btn btn-primary">Go somewhere</a>
-                <p class="card-text"><small class="text-muted">Last updated 3 mins ago</small></p>
-            </div>
-        </div>
-    </div>
-    <div class="col-sm-3">
+    <div class="col-sm-2">
         <div class="card">
             <h5 class="card-header">Featured</h5>
             <div class="card-body">
