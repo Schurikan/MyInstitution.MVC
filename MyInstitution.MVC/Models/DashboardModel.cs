@@ -7,6 +7,6 @@ namespace MyInstitution.MVC.Models
 {
     public class DashboardModel
     {
-        public List<Event> Events { get; set; }
+        public List<EventModel> Events { get; set; }
     }
 }
